@@ -1,7 +1,18 @@
-#=========
-#数据库配置
-#=========
+server:
+  port: 9999
+
 spring:
+  #===========
+  #thymeleaf配置
+  #===========
+  thymeleaf:
+    enabled: true
+    cache: false
+    encoding: utf-8
+
+  #=========
+  #数据库配置
+  #=========
   datasource:
     url: jdbc:mysql://59.110.237.203:3306/test?useUnicode:true&characterEncoding:UTF-8
     name: test
@@ -28,32 +39,37 @@ spring:
       #filters:
       # WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
       #是否启用StatFilter默认值true
-      #web-stat-filter.enabled:
-      web-stat-filter.url-pattern: /*
-      web-stat-filter.exclusions:
-        -*.js
-        -*.gif
-        -*.jpg
-        -*.png
-        -*.css
-        -*.ico
-        -/druid/*
-        -/druid
-      #web-stat-filter.session-stat-enable:
-      #web-stat-filter.session-stat-max-count:
-      #web-stat-filter.principal-session-name:
-      #web-stat-filter.principal-cookie-name:
-      #web-stat-filter.profile-enable:
+      #enabled:
+      web-stat-filter:
+        url-pattern: /*
+        exclusions:
+          -*.js
+          -*.gif
+          -*.jpg
+          -*.png
+          -*.css
+          -*.ico
+          -/druid/*
+          -/druid
+      #session-stat-enable:
+      #session-stat-max-count:
+      #principal-session-name:
+      #principal-cookie-name:
+      #profile-enable:
       # StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置
       #是否启用StatViewServlet默认值true
       #stat-view-servlet.enabled:
-      stat-view-servlet.url-pattern: /druid/*
-      stat-view-servlet.reset-enable: true
-      stat-view-servlet.login-username: admin
-      stat-view-servlet.login-password: admin
-      #stat-view-servlet.allow:
-      #stat-view-servlet.deny:
+      stat-view-servlet:
+        url-pattern: /druid/*
+        reset-enable: true
+        login-username: admin
+        login-password: admin
+        #allow:
+        #deny:
       # Spring监控配置，说明请参考Druid Github Wiki，配置_Druid和Spring关联监控配置
       # Spring监控AOP切入点，如x.y.z.service.*,配置多个英文逗号分隔
       aop-patterns: com.redbean.distributor.service.*
       # 如果aop-patterns要代理的类没有定义interface请设置spring.aop.proxy-target-class:true
+
+  mvc:
+      static-path-pattern: /**
