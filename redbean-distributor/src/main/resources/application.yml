@@ -70,6 +70,26 @@ spring:
       # Spring监控AOP切入点，如x.y.z.service.*,配置多个英文逗号分隔
       aop-patterns: com.redbean.distributor.service.*
       # 如果aop-patterns要代理的类没有定义interface请设置spring.aop.proxy-target-class:true
-
+  #========
+  # MVC配置
+  #========
   mvc:
       static-path-pattern: /**
+  #========
+  # JPA配置
+  #========
+  jpa:
+    show-sql: true
+
+
+#=========
+# 日志配置
+#=========
+logging:
+  file: redbean-distributor
+  path: logs
+  config: classpath:logback-spring.xml
+
+
+
+
