@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>用户页面</title>
+  <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/js/sockjs.js}"></script>
+  <script type="text/javascript" th:src="@{/js/stomp.js}"></script>
+  <script type="text/javascript" th:src="@{/js/broadcast/app.js}"></script>
+</head>
+<body>
+<div id="messageDiv">
+
+</div>
+<div id="loginDiv">
+  用户名：<input value="" id="userName"/>
+  <input type="button" value="登录" id="login"/>
+</div>
+<div id="logoutDiv" style="display: none;">
+  <input type="button" value="登出" id="logout"/>
+</div>
+
+</body>
+</html>
