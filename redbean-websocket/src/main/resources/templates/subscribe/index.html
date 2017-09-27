@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Index</title>
+  <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/js/sockjs.js}"></script>
+  <script type="text/javascript" th:src="@{/js/stomp.js}"></script>
+</head>
+<body>
+<div>
+  <input id="name" name="name" />
+  <input type="button" onclick="sendMessage()" value="发送"/>
+</div>
+
+<script type="text/javascript">
+  var socket = new SockJS("/gs-guide-websocket");
+  var stompClient = Stomp.over(socket);
+  stompClient.connect({user:1}, function (frame) {
+    console.log('Connected: ' + frame);
+
+  });
+  function sendMessage() {
+    var name =  $("#name").val();
+    stompClient.send("/app/say", {'user':name}, JSON.stringify({'name':name}));
+  }
+
+</script>
+</body>
+</html>
