@@ -10,9 +10,12 @@ $(function () {
       $("#loginDiv").hide();
 
       $("#messageDiv").append(userName + " connected!</br>");
-      stompClient.subscribe("/chat/"+userName+"/greetings", function (greeting) {
-        $("#messageDiv").append(JSON.parse(greeting.body).content + "</br>");
-      });
+      stompClient.subscribe("/chat/" + userName + "/greetings",
+          function (greeting) {
+            var message = JSON.parse(greeting.body);
+            $("#messageDiv").append(message.from + "说：" + message.content
+                + "</br>");
+          });
     });
   }
 
@@ -23,7 +26,16 @@ $(function () {
     }
     $("#loginDiv").show();
     $("#logoutDiv").hide();
+    $("#messageDiv").html("");
     console.log("Disconnected");
+  }
+
+  function sendMessage() {
+    var name = $("#name").val();
+    var fromName = $("#userName").val();
+    var message = $("#message").val();
+    stompClient.send("/app/say", {'user': name},
+        JSON.stringify({'message': message,'name':fromName}));
   }
 
   $("#login").click(function () {
@@ -31,5 +43,9 @@ $(function () {
   });
   $("#logout").click(function () {
     disconnect();
+  });
+
+  $("#sendMessage").click(function () {
+    sendMessage();
   });
 });

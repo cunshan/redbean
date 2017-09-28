@@ -3,9 +3,10 @@ package com.redbean.websocket.bean;
 import lombok.Data;
 
 @Data
-public class HelloMessage {
+public class ChatMessage {
 
   private String name;
+  private String message;
 
 
 }

@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class Greeting {
 
   private String content;
-
+  private String from;//发送者
 }

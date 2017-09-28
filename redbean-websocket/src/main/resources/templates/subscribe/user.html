@@ -6,7 +6,7 @@
   <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
   <script type="text/javascript" th:src="@{/js/sockjs.js}"></script>
   <script type="text/javascript" th:src="@{/js/stomp.js}"></script>
-  <script type="text/javascript" th:src="@{/js/subscribe/app.js}"></script>
+  <script type="text/javascript" th:src="@{/js/subscribe/user.js}"></script>
 </head>
 <body>
 <div id="messageDiv">
@@ -19,6 +19,10 @@
 <div id="logoutDiv" style="display: none;">
   <input type="button" value="登出" id="logout"/>
 </div>
-
+<div>
+  发送给：<input id="name" name="name" />
+  信息：<textarea id="message" cols="3" style="width: 300px;"></textarea>
+  <input type="button" id="sendMessage" value="发送"/>
+</div>
 </body>
 </html>
