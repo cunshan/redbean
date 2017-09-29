@@ -32,7 +32,7 @@ public class SubscribeController {
 
   @MessageMapping("/say")
   public void say(@Header String user, ChatMessage message) {
-    messagingTemplate.convertAndSend("/chat/" + user + "/greetings",
+    messagingTemplate.convertAndSend("/exchange/greetings/" + user,
         new Greeting(message.getMessage(), message.getName()));
   }
 }

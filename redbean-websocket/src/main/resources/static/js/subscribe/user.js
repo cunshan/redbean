@@ -4,13 +4,13 @@ $(function () {
     var userName = $("#userName").val();
     var socket = new SockJS("/gs-guide-websocket");
     stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
+    stompClient.connect('guest','guest', function (frame) {
       console.log('Connected: ' + frame);
       $("#logoutDiv").show();
       $("#loginDiv").hide();
 
       $("#messageDiv").append(userName + " connected!</br>");
-      stompClient.subscribe("/chat/" + userName + "/greetings",
+      stompClient.subscribe("/exchange/greetings/"+userName,
           function (greeting) {
             var message = JSON.parse(greeting.body);
             $("#messageDiv").append(message.from + "说：" + message.content
