@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Index</title>
+  <script type="text/javascript" th:src="@{/third/layim/layui.js}"></script>
+  <link rel="stylesheet" th:href="@{/third/layim/css/layui.css}"/>
+</head>
+<body>
+<script>
+  layui.use('layim', function (layim) {
+    //基础配置
+    layim.config({
+      title: "PBCS交互",
+      min: true,
+
+      //获取主面板列表信息
+      init: {
+        url: '/im/init', //接口地址（返回的数据格式见下文）
+        type: 'get', //默认get，一般可不填
+        data: {} //额外参数
+      },
+      members: {
+        url: '/im/members',
+        data: {}
+      }
+
+    })
+    ;
+  });
+</script>
+</body>
+</html>
