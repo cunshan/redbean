@@ -15,6 +15,6 @@ public class User implements Serializable {
   private String username;//昵称
   private String status;//在线状态 online：在线、hide：隐身
   private String sign;//我的签名
-  private String avatar;//头像
+  private String avatar = "/img/logo.jpg";//头像
 
 }

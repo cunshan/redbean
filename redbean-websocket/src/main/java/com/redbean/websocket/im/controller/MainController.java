@@ -27,8 +27,8 @@ public class MainController {
   ConfigService configService;
 
   @GetMapping("/init")
-  private ImResponse init() {
-    return configService.getInitConfig();
+  private ImResponse init(String loginAccount) {
+    return configService.getInitConfig(loginAccount);
   }
 
 

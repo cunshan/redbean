@@ -7,7 +7,7 @@ import com.redbean.websocket.im.vo.ImResponse;
  */
 public interface ConfigService {
 
-  ImResponse getInitConfig();
+  ImResponse getInitConfig(String loginAccount);
 
   ImResponse getGroupMembers(String groupId);
 

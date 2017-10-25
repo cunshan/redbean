@@ -11,7 +11,6 @@ import com.redbean.websocket.im.vo.layim.MembersData;
 import com.redbean.websocket.im.vo.layim.User;
 import com.redbean.websocket.im.vo.layim.UserGroup;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +18,16 @@ import org.springframework.stereotype.Service;
 public class ConfigServiceImpl implements ConfigService {
 
   @Override
-  public ImResponse getInitConfig() {
+  public ImResponse getInitConfig(String loginAccount) {
     InitResponse response = new InitResponse();
 
     InitData initData = new InitData();
 
     User mine = new User();
-    mine.setId("8888");
+    mine.setId(loginAccount);
     mine.setSign("不要打扰我");
     mine.setStatus(User.STATUS_ONLINE);
-    mine.setUsername("张三");
+    mine.setUsername(loginAccount);
     initData.setMine(mine);
 
     User user = new User();
@@ -36,11 +35,22 @@ public class ConfigServiceImpl implements ConfigService {
     user.setSign("啊啊啊");
     user.setStatus(User.STATUS_ONLINE);
     user.setUsername("李四");
+
+    User user2 = new User();
+    user2.setId("2");
+    user2.setSign("啊啊啊");
+    user2.setStatus(User.STATUS_ONLINE);
+    user2.setUsername("王五");
+    List<User> users = new ArrayList<>();
+    users.add(mine);
+    users.add(user);
+    users.add(user2);
+
     List<ImGroup> friend = new ArrayList<>();
     UserGroup userGroup = new UserGroup();
     userGroup.setGroupname("我们是一对");
     userGroup.setId("1");
-    userGroup.setList(Collections.singletonList(user));
+    userGroup.setList(users);
     friend.add(userGroup);
     initData.setFriend(friend);
 
@@ -58,7 +68,6 @@ public class ConfigServiceImpl implements ConfigService {
 
     response.setData(initData);
 
-
     return response;
   }
 
@@ -67,7 +76,7 @@ public class ConfigServiceImpl implements ConfigService {
     BaseResponse response = new BaseResponse();
     MembersData membersData = new MembersData();
 
-    if("1".equals(groupId)){
+    if ("1".equals(groupId)) {
       List<User> users = new ArrayList<>();
       User user = new User();
       user.setId("5");

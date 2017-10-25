@@ -7,6 +7,6 @@ public class ChatGroup extends BaseGroup{
 
   private static final long serialVersionUID = 761004795972954356L;
 
-  private String avatar;//头像
+  private String avatar = "/img/logo.jpg";//头像
 
 }
