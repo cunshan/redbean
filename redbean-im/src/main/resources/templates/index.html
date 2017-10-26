@@ -3,8 +3,108 @@
 <head>
   <meta charset="UTF-8"/>
   <title>IM</title>
+  <link rel="stylesheet" href="/third/layim/css/layui.css"/>
 </head>
 <body>
-aaa
 </body>
+<form id="loginForm" class="layui-form" action="" style="display: none;">
+  <div class="layui-form-item">
+    <label class="layui-form-label">用户名</label>
+    <div class="layui-input-inline">
+      <input type="text" name="title" id="userName" lay-verify="required" placeholder="用户名"
+             autocomplete="off" class="layui-input"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">密码</label>
+    <div class="layui-input-inline">
+      <input type="password" name="password" lay-verify="required" placeholder="密码"
+             autocomplete="off" class="layui-input"/>
+    </div>
+    <!--<div class="layui-form-mid layui-word-aux">辅助文字</div>-->
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn layui-btn-radius" id="loginBtn" type="button">登录</button>
+    </div>
+  </div>
+</form>
+<script type="text/javascript" src="/third/layim/layui.js"></script>
+<script type="text/javascript" src="/js/sockjs.js"></script>
+<script type="text/javascript" src="/js/stomp.js"></script>
+<script type="text/javascript">
+  var $;
+  layui.use(['jquery', 'layim', 'layer'], function (layim) {
+
+    $ = layui.$; //重点处
+    var layim = layui.layim;
+
+    var logIndex = layer.open({
+      type: 1,
+      content: $("#loginForm"), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+      closeBtn: 0,
+      resize: false,
+      title: '登录'
+    });
+
+    $("#loginBtn").click(function () {
+      var loginAccount = $("#userName").val();
+      //基础配置
+      layim.config({
+        voice: false,
+        title: "PBCS交互",
+        min: false,
+        //获取主面板列表信息
+        init: {
+          url: '/config/init', //接口地址（返回的数据格式见下文）
+          type: 'get', //默认get，一般可不填
+          data: {loginAccount: loginAccount} //额外参数
+        },
+        members: {
+          url: '/config/members',
+          data: {}
+        }
+
+      });
+
+      //连接websocket
+      var socket = new SockJS("/gs-guide-websocket");
+      var stompClient = Stomp.over(socket);
+      stompClient.connect('guest', 'guest', function (frame) {
+        console.log('Connected: ' + frame);
+        //绑定接收信息事件
+        stompClient.subscribe("/exchange/friend/" + loginAccount,
+            function (greeting) {
+              var data = JSON.parse(greeting.body);
+              console.log(data);
+              layim.getMessage(data);
+            });
+      });
+
+      //绑定发送事件
+      layim.on('sendMessage', function (res) {
+        var mine = res.mine;
+        var to = res.to;
+
+        var message = {
+          id: mine.id,
+          type: to.type,
+          content: mine.content,
+          username: mine.username,
+          avatar: mine.avatar,
+          fromId: 1,
+          toUserId: to.id
+        };
+
+        stompClient.send("/im-ws/talk-to-friend", {},
+            JSON.stringify(message));
+      });
+
+      layer.close(logIndex);
+    });
+
+  });
+
+</script>
+
 </html>
