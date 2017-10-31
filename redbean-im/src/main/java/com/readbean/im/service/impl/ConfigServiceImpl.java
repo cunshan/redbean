@@ -1,25 +1,30 @@
 package com.readbean.im.service.impl;
 
+import com.readbean.im.domain.User;
+import com.readbean.im.repository.UserRepository;
 import com.readbean.im.service.ConfigService;
 import com.readbean.im.vo.ChatGroup;
 import com.readbean.im.vo.ImResponse;
 import com.readbean.im.vo.InitData;
-import com.readbean.im.vo.User;
+import com.readbean.im.vo.UserVo;
 import com.readbean.im.vo.UserGroup;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ConfigServiceImpl implements ConfigService {
+
+  @Autowired
+  private UserRepository userRepository;
 
   @Override
   public ImResponse init(String loginAccount) {
     ImResponse response = new ImResponse();
     InitData data = new InitData();
     //登录用户
-    User mine = buildUser(loginAccount);
-    data.setMine(mine);
+    data.setMine(buildUser(loginAccount));
     //好友列表
     List<UserGroup> userGroups = buildUserGroups(loginAccount);
     data.setFriend(userGroups);
@@ -43,33 +48,31 @@ public class ConfigServiceImpl implements ConfigService {
     return list;
   }
 
-  private User buildUser(String loginAccount) {
-    User user = new User();
-    user.setId(loginAccount);
-    user.setSign("我是登录人");
-    user.setUsername(loginAccount);
-    user.setStatus(User.STATUS_ONLINE);
-    return user;
+  private UserVo buildUser(String loginAccount) {
+    User loginUser = userRepository.findDistinctByLoginAccount(loginAccount);
+    return buildUserVoFromUser(loginUser);
   }
 
-  private List<User> buildFriends(String loginAccount) {
-    List<User> list = new ArrayList<>();
-    if ("1".equals(loginAccount)) {
-      list.add(buildUser("2"));
-      list.add(buildUser("3"));
-    } else if ("2".equals(loginAccount)) {
-      list.add(buildUser("1"));
-      list.add(buildUser("3"));
-    } else if ("3".equals(loginAccount)) {
-      list.add(buildUser("1"));
-      list.add(buildUser("2"));
-    }
+  private UserVo buildUserVoFromUser(User loginUser) {
+    UserVo userVo = new UserVo();
+    userVo.setAvatar(loginUser.getAvatar());
+    userVo.setId(loginUser.getLoginAccount());
+    userVo.setUsername(loginUser.getName());
+    return userVo;
+  }
+
+  private List<UserVo> buildFriends(String loginAccount) {
+    List<UserVo> list = new ArrayList<>();
+    //TODO 应该从好友分类里查询列表，现在暂时查询所有好友
+    userRepository.findAll().forEach(user -> {
+      list.add(buildUserVoFromUser(user));
+    });
     return list;
   }
 
   private List<UserGroup> buildUserGroups(String loginAccount) {
     //好友
-    List<User> friends = buildFriends(loginAccount);
+    List<UserVo> friends = buildFriends(loginAccount);
     List<UserGroup> list = new ArrayList<>();
     UserGroup group1 = new UserGroup();
     group1.setId("1");

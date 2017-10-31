@@ -28,6 +28,10 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
         .enableStompBrokerRelay("/exchange", "/queue", "/amq/queue", "/topic", "/temp-queue");
     relayRegistration.setRelayHost(stompRelayProperties.getRelayHost());
     relayRegistration.setRelayPort(stompRelayProperties.getRelayPort());
+    relayRegistration.setSystemLogin(stompRelayProperties.getSystemLogin());
+    relayRegistration.setSystemPasscode(stompRelayProperties.getSystemPasscode());
+    relayRegistration.setClientLogin(stompRelayProperties.getSystemLogin());
+    relayRegistration.setClientPasscode(stompRelayProperties.getSystemPasscode());
     relayRegistration.setSystemHeartbeatReceiveInterval(1000);
     relayRegistration.setSystemHeartbeatSendInterval(1000);
     registry.setApplicationDestinationPrefixes("/im-ws");

@@ -10,4 +10,12 @@ public interface UserRepository extends CrudRepository<User,Long> {
    */
   User findDistinctByLoginAccountAndPassword(String loginAccount,String password);
 
+  /**.
+   * 根据用户名查询单个用户
+   */
+  User findDistinctByLoginAccount(String loginAccount);
+
+
+
+
 }
