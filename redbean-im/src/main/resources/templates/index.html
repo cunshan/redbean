@@ -18,7 +18,7 @@
   <div class="layui-form-item">
     <label class="layui-form-label">密码</label>
     <div class="layui-input-inline">
-      <input type="password" name="password" lay-verify="required" placeholder="密码"
+      <input type="password" name="password" id="password" lay-verify="required" placeholder="密码"
              autocomplete="off" class="layui-input"/>
     </div>
     <!--<div class="layui-form-mid layui-word-aux">辅助文字</div>-->
@@ -47,8 +47,12 @@
       title: '登录'
     });
 
-    $("#loginBtn").click(function () {
+    /**.
+     * 初始化IM
+     */
+    function initIm() {
       var loginAccount = $("#userName").val();
+      var password = $("#password").val();
       //基础配置
       layim.config({
         voice: false,
@@ -82,10 +86,10 @@
       }, function (frame) {
         console.log(frame.headers);
         var headers = frame.headers;
-        if(headers){
+        if (headers) {
           layer.msg(headers.message);
           //TODO 修改在线状态
-          
+
         }
 
       });
@@ -108,8 +112,33 @@
         stompClient.send("/im-ws/talk-to-friend", {},
             JSON.stringify(message));
       });
+    }
 
-      layer.close(logIndex);
+    $("#loginBtn").click(function () {
+      var loginAccount = $("#userName").val();
+      var password = $("#password").val();
+      //登录
+      $.ajax({
+        method:"POST",
+        url: "/rest/login",
+        dataType: "json",
+        data: {loginAccount: loginAccount, password: password},
+        success: function (data) {
+          console.log(data);
+          if (data.code === '0') {
+            //登录成功后初始化IM
+            initIm();
+            //关闭登陆框
+            layer.close(logIndex);
+          }else{
+            layer.msg(data.msg);
+          }
+        },
+        error: function () {
+          layer.msg("登录失败，请稍后再试！");
+        }
+      });
+
     });
 
   });

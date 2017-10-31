@@ -8,8 +8,8 @@ public class ImResponse implements Serializable {
 
   private static final long serialVersionUID = -8677679337443584141L;
 
-  private static final String CODE_SUCCESS = "0";
-  private static final String CODE_ERROR = "1";
+  public static final String CODE_SUCCESS = "0";
+  public static final String CODE_ERROR = "1";
 
   private String code = "0";
   private String msg;
