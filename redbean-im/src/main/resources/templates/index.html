@@ -79,6 +79,15 @@
               console.log(data);
               layim.getMessage(data);
             });
+      }, function (frame) {
+        console.log(frame.headers);
+        var headers = frame.headers;
+        if(headers){
+          layer.msg(headers.message);
+          //TODO 修改在线状态
+          
+        }
+
       });
 
       //绑定发送事件
