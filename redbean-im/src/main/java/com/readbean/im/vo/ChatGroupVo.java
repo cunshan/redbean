@@ -4,7 +4,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class ChatGroup implements Serializable {
+public class ChatGroupVo implements Serializable {
 
   private static final long serialVersionUID = 6244897682345747887L;
 

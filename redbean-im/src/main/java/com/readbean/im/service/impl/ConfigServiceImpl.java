@@ -3,17 +3,19 @@ package com.readbean.im.service.impl;
 import com.readbean.im.domain.User;
 import com.readbean.im.repository.UserRepository;
 import com.readbean.im.service.ConfigService;
-import com.readbean.im.vo.ChatGroup;
+import com.readbean.im.vo.ChatGroupVo;
 import com.readbean.im.vo.ImResponse;
 import com.readbean.im.vo.InitData;
 import com.readbean.im.vo.UserVo;
-import com.readbean.im.vo.UserGroup;
+import com.readbean.im.vo.UserGroupVo;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ConfigServiceImpl implements ConfigService {
 
   @Autowired
@@ -26,21 +28,21 @@ public class ConfigServiceImpl implements ConfigService {
     //登录用户
     data.setMine(buildUser(loginAccount));
     //好友列表
-    List<UserGroup> userGroups = buildUserGroups(loginAccount);
+    List<UserGroupVo> userGroups = buildUserGroups(loginAccount);
     data.setFriend(userGroups);
     //群组列表
-    List<ChatGroup> chatGroups = buildChatGroups();
+    List<ChatGroupVo> chatGroups = buildChatGroups();
     data.setGroup(chatGroups);
     response.setData(data);
     return response;
   }
 
-  private List<ChatGroup> buildChatGroups() {
-    List<ChatGroup> list = new ArrayList<>();
-    ChatGroup chatGroup1 = new ChatGroup();
+  private List<ChatGroupVo> buildChatGroups() {
+    List<ChatGroupVo> list = new ArrayList<>();
+    ChatGroupVo chatGroup1 = new ChatGroupVo();
     chatGroup1.setId("1");
     chatGroup1.setGroupname("Group-1");
-    ChatGroup chatGroup2 = new ChatGroup();
+    ChatGroupVo chatGroup2 = new ChatGroupVo();
     chatGroup2.setId("2");
     chatGroup2.setGroupname("Group-2");
     list.add(chatGroup1);
@@ -70,17 +72,17 @@ public class ConfigServiceImpl implements ConfigService {
     return list;
   }
 
-  private List<UserGroup> buildUserGroups(String loginAccount) {
+  private List<UserGroupVo> buildUserGroups(String loginAccount) {
     //好友
     List<UserVo> friends = buildFriends(loginAccount);
-    List<UserGroup> list = new ArrayList<>();
-    UserGroup group1 = new UserGroup();
+    List<UserGroupVo> list = new ArrayList<>();
+    UserGroupVo group1 = new UserGroupVo();
     group1.setId("1");
     group1.setGroupname("任务中心");
     group1.setList(friends);
     list.add(group1);
 
-    UserGroup group2 = new UserGroup();
+    UserGroupVo group2 = new UserGroupVo();
     group2.setId("1");
     group2.setGroupname("任务中心");
     group2.setList(friends);

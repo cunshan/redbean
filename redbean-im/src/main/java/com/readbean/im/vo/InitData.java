@@ -10,7 +10,7 @@ import lombok.Data;
 public class InitData implements ImData {
 
   private UserVo mine;//我的信息  登录人的信息
-  private List<UserGroup> friend;//好友列表
-  private List<ChatGroup> group;//群组列表
+  private List<UserGroupVo> friend;//好友列表
+  private List<ChatGroupVo> group;//群组列表
 
 }

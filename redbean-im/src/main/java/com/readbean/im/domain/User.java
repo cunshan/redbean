@@ -1,19 +1,14 @@
 package com.readbean.im.domain;
 
-import java.util.Date;
+import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import lombok.Data;
 
 @Entity
 @Data
-public class User {
+public class User extends BaseDomain implements Serializable{
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;//ID
+  private static final long serialVersionUID = -6571188111298793009L;
 
   private String loginAccount;//登陆账号
 
@@ -22,9 +17,4 @@ public class User {
   private String name;//名称
 
   private String avatar = "/img/logo.jpg";//头像
-
-  private Date createDate;
-  private Date updateDate;
-  private String createBy;
-  private String updateBy;
 }
