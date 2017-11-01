@@ -30,8 +30,8 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     relayRegistration.setRelayPort(stompRelayProperties.getRelayPort());
     relayRegistration.setSystemLogin(stompRelayProperties.getSystemLogin());
     relayRegistration.setSystemPasscode(stompRelayProperties.getSystemPasscode());
-    relayRegistration.setClientLogin(stompRelayProperties.getSystemLogin());
-    relayRegistration.setClientPasscode(stompRelayProperties.getSystemPasscode());
+    relayRegistration.setClientLogin(stompRelayProperties.getClientLogin());
+    relayRegistration.setClientPasscode(stompRelayProperties.getClientPasscode());
     relayRegistration.setSystemHeartbeatReceiveInterval(1000);
     relayRegistration.setSystemHeartbeatSendInterval(1000);
     registry.setApplicationDestinationPrefixes("/im-ws");
