@@ -1,6 +1,7 @@
 package com.readbean.im.service.impl;
 
 import com.readbean.im.domain.User;
+import com.readbean.im.repository.UserGroupRepository;
 import com.readbean.im.repository.UserRepository;
 import com.readbean.im.service.ConfigService;
 import com.readbean.im.vo.ChatGroupVo;
@@ -20,6 +21,9 @@ public class ConfigServiceImpl implements ConfigService {
 
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private UserGroupRepository userGroupRepository;
 
   @Override
   public ImResponse init(String loginAccount) {
@@ -60,6 +64,7 @@ public class ConfigServiceImpl implements ConfigService {
     userVo.setAvatar(loginUser.getAvatar());
     userVo.setId(loginUser.getLoginAccount());
     userVo.setUsername(loginUser.getName());
+    userVo.setStatus(UserVo.STATUS_ONLINE);
     return userVo;
   }
 
@@ -76,17 +81,13 @@ public class ConfigServiceImpl implements ConfigService {
     //好友
     List<UserVo> friends = buildFriends(loginAccount);
     List<UserGroupVo> list = new ArrayList<>();
-    UserGroupVo group1 = new UserGroupVo();
-    group1.setId("1");
-    group1.setGroupname("任务中心");
-    group1.setList(friends);
-    list.add(group1);
-
-    UserGroupVo group2 = new UserGroupVo();
-    group2.setId("1");
-    group2.setGroupname("任务中心");
-    group2.setList(friends);
-    list.add(group2);
+    userGroupRepository.findAll().forEach(userGroup -> {
+      UserGroupVo vo = new UserGroupVo();
+      vo.setGroupname(userGroup.getGroupName());
+      vo.setId(userGroup.getId().toString());
+      vo.setList(friends);
+      list.add(vo);
+    });
 
     return list;
   }
