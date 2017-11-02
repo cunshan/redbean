@@ -18,9 +18,8 @@ public class UserServiceImpl implements UserService {
 
 
   @Override
-  public boolean login(User param) {
-    User user = userRepository
+  public User login(User param) {
+    return userRepository
         .findDistinctByLoginAccountAndPassword(param.getLoginAccount(), param.getPassword());
-    return user != null;
   }
 }

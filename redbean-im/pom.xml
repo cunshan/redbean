@@ -25,6 +25,7 @@
     <reactor-net.version>2.0.4.RELEASE</reactor-net.version>
     <netty-all.version>4.1.15.Final</netty-all.version>
     <lombok.version>1.16.18</lombok.version>
+    <fastjson.version>1.2.38</fastjson.version>
   </properties>
 
   <dependencies>
@@ -84,6 +85,19 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${fastjson.version}</version>
+    </dependency>
+
   </dependencies>
 
   <build>

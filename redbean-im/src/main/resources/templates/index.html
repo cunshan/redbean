@@ -50,8 +50,7 @@
     /**.
      * 初始化IM
      */
-    function initIm() {
-      var loginAccount = $("#userName").val();
+    function initIm(user) {
       //基础配置
       layim.config({
         isAudio: true,
@@ -63,7 +62,7 @@
         init: {
           url: '/config/init', //接口地址（返回的数据格式见下文）
           type: 'get', //默认get，一般可不填
-          data: {loginAccount: loginAccount} //额外参数
+          data: {loginAccount: user.loginAccount} //额外参数
         },
         members: {
           url: '/config/members',
@@ -102,7 +101,7 @@
       stompClient.connect('guest', 'guest', function (frame) {
         console.log('Connected: ' + frame);
         //绑定接收信息事件
-        stompClient.subscribe("/queue/user-" + loginAccount,
+        stompClient.subscribe("/queue/user-" + user.id,
             function (greeting) {
               var data = JSON.parse(greeting.body);
               console.log(data);
@@ -152,7 +151,7 @@
           console.log(data);
           if (data.code === '0') {
             //登录成功后初始化IM
-            initIm();
+            initIm(data.data);
             //关闭登陆框
             layer.close(logIndex);
           }else{

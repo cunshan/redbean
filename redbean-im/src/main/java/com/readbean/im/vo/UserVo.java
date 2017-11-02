@@ -12,6 +12,7 @@ public class UserVo implements Serializable{
   public static final String STATUS_ONLINE = "online";
 
   private String id;//ID
+  private String loginAccount;//登录账户
   private String username;//昵称
   private String status;//在线状态 online：在线、hide：隐身
   private String sign;//我的签名

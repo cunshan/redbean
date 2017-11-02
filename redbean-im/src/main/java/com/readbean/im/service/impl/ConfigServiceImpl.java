@@ -27,7 +27,7 @@ public class ConfigServiceImpl implements ConfigService {
 
   @Override
   public ImResponse init(String loginAccount) {
-    ImResponse response = new ImResponse();
+    ImResponse<InitData> response = new ImResponse<>();
     InitData data = new InitData();
     //登录用户
     data.setMine(buildUser(loginAccount));
@@ -62,7 +62,7 @@ public class ConfigServiceImpl implements ConfigService {
   private UserVo buildUserVoFromUser(User loginUser) {
     UserVo userVo = new UserVo();
     userVo.setAvatar(loginUser.getAvatar());
-    userVo.setId(loginUser.getLoginAccount());
+    userVo.setId(Long.toString(loginUser.getId()));
     userVo.setUsername(loginUser.getName());
     userVo.setStatus(UserVo.STATUS_ONLINE);
     return userVo;

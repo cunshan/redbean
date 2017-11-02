@@ -4,5 +4,5 @@ import com.readbean.im.domain.User;
 
 public interface UserService {
 
-  boolean login(User user);
+  User login(User user);
 }
