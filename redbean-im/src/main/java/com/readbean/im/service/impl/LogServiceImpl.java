@@ -1,7 +1,9 @@
 package com.readbean.im.service.impl;
 
 import com.readbean.im.domain.ChatLog;
+import com.readbean.im.domain.LoginLog;
 import com.readbean.im.repository.ChatLogRepository;
+import com.readbean.im.repository.LoginLogRepository;
 import com.readbean.im.service.LogService;
 import com.readbean.im.vo.ImMessage;
 import java.util.Date;
@@ -16,8 +18,11 @@ public class LogServiceImpl implements LogService {
   @Resource
   private ChatLogRepository chatLogRepository;
 
+  @Resource
+  private LoginLogRepository loginLogRepository;
+
   @Override
-  public void add(ImMessage message) {
+  public void addChatLog(ImMessage message) {
     ChatLog log = new ChatLog();
     log.setContent(message.getContent());
     log.setFromUserId(Long.parseLong(message.getId()));
@@ -27,5 +32,14 @@ public class LogServiceImpl implements LogService {
     log.setCreatedDate(new Date());
     log.setUpdatedDate(new Date());
     chatLogRepository.save(log);
+  }
+
+  @Override
+  public void addLoginLog(LoginLog log) {
+    log.setCreatedDate(new Date());
+    log.setCreatedBy(log.getLoginAccount());
+    log.setUpdatedBy(log.getLoginAccount());
+    log.setUpdatedDate(new Date());
+    loginLogRepository.save(log);
   }
 }

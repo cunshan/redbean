@@ -45,7 +45,7 @@ public class ChatLogInterceptor {
   public void after(JoinPoint joinPoint, ImMessage message) {
     log.info(LOG_STR + "after...");
     log.info(JSON.toJSONString(message));
-    chatLogService.add(message);
+    chatLogService.addChatLog(message);
   }
 
   @AfterThrowing(value = "chatLog(message)", throwing = "exception")
