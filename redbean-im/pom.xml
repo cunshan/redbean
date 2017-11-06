@@ -26,6 +26,7 @@
     <netty-all.version>4.1.15.Final</netty-all.version>
     <lombok.version>1.16.18</lombok.version>
     <fastjson.version>1.2.38</fastjson.version>
+    <nekohtml.version>1.9.22</nekohtml.version>
   </properties>
 
   <dependencies>
@@ -98,6 +99,12 @@
       <version>${fastjson.version}</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/net.sourceforge.nekohtml/nekohtml -->
+    <dependency>
+      <groupId>net.sourceforge.nekohtml</groupId>
+      <artifactId>nekohtml</artifactId>
+      <version>${nekohtml.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
