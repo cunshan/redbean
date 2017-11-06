@@ -1,6 +1,7 @@
 package com.readbean.im.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -11,8 +12,11 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
 @Configuration
 @EnableConfigurationProperties(StompRelayProperties.class)
+@ConditionalOnProperty(prefix = WebSocketConfig.WEBSOCKET_PREFIX)
 @EnableWebSocketMessageBroker
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
+
+  public static final String WEBSOCKET_PREFIX = "websocket";
 
   @Autowired
   private StompRelayProperties stompRelayProperties;

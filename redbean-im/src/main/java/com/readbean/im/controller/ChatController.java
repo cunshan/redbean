@@ -1,28 +1,25 @@
 package com.readbean.im.controller;
 
-import com.readbean.im.service.ChatService;
-import com.readbean.im.vo.ImMessage;
-import javax.annotation.Resource;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+@Controller
+@RequestMapping("/chat")
 public class ChatController {
 
-
-  @Resource
-  private ChatService chatService;
-
-  @MessageMapping("/talk-to-friend")
-  public void friend(ImMessage message) {
-    chatService.sendToFriend(message);
+  @GetMapping("/chat-log")
+  public String chatLog(){
+   return "chatLog";
   }
 
-
-  @MessageMapping("/group")
-  public void group() {
-
+  @GetMapping("/find")
+  public String find(){
+    return "find";
   }
 
-
+  @GetMapping("/msg-box")
+  public String msgBox(){
+    return "msgBox";
+  }
 }

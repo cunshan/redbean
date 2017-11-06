@@ -8,6 +8,7 @@ import com.readbean.im.util.WebUtils;
 import com.readbean.im.vo.ImResponse;
 import com.readbean.im.vo.UserVo;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,8 @@ public class LoginRestController {
   private LogService logService;
 
   @PostMapping("/login")
-  public ImResponse login(String loginAccount, String password, HttpServletRequest request) {
+  public ImResponse login(String loginAccount, String password, HttpServletRequest request,
+      HttpServletResponse response) {
     User user = new User();
     user.setLoginAccount(loginAccount);
     user.setPassword(password);
@@ -45,6 +47,7 @@ public class LoginRestController {
     imResponse.setData(userVo);
     //保存登录日志
     saveLoginLog(request, loginUser);
+    WebUtils.setUserIdToSession(request, Long.toString(loginUser.getId()));
     return imResponse;
   }
 
