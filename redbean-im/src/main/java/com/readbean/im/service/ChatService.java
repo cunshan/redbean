@@ -1,6 +1,8 @@
 package com.readbean.im.service;
 
+import com.readbean.im.vo.ChatLogVo;
 import com.readbean.im.vo.ImMessage;
+import com.readbean.im.vo.ImResponse;
 import java.util.List;
 
 public interface ChatService {
@@ -13,6 +15,6 @@ public interface ChatService {
   /**
    * . 获取聊天记录
    */
-  List<ImMessage> queryChatLogs(String userId, String toUserId, String type);
+  ImResponse<List<ChatLogVo>> queryChatLogs(String userId, String toUserId, String type);
 
 }

@@ -13,7 +13,7 @@ public class BaseDomain {
 
   @Id
   @GeneratedValue
-  private Long id;//分组ID
+  private Long id;//ID
 
   @CreatedDate
   private Date createdDate;

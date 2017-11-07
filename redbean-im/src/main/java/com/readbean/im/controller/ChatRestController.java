@@ -2,7 +2,9 @@ package com.readbean.im.controller;
 
 import com.readbean.im.service.ChatService;
 import com.readbean.im.util.WebUtils;
+import com.readbean.im.vo.ChatLogVo;
 import com.readbean.im.vo.ImMessage;
+import com.readbean.im.vo.ImResponse;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +22,8 @@ public class ChatRestController {
   private ChatService chatService;
 
   @PostMapping("/chat-log")
-  public List<ImMessage> chatLog(String id, String type, HttpServletRequest request) {
-    return chatService.queryChatLogs(WebUtils.getUserIdFromSession(request),id, type);
+  public ImResponse<List<ChatLogVo>> chatLog(String id, String type, HttpServletRequest request) {
+    return chatService.queryChatLogs(WebUtils.getUserIdFromSession(request), id, type);
   }
 
 }

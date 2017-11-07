@@ -12,11 +12,8 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
 @Configuration
 @EnableConfigurationProperties(StompRelayProperties.class)
-@ConditionalOnProperty(prefix = WebSocketConfig.WEBSOCKET_PREFIX)
 @EnableWebSocketMessageBroker
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
-
-  public static final String WEBSOCKET_PREFIX = "websocket";
 
   @Autowired
   private StompRelayProperties stompRelayProperties;
