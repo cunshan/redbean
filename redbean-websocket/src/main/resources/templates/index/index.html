@@ -57,13 +57,14 @@
     var layim = layui.layim;
     //基础配置
     layim.config({
+      voice: false,
       title: "PBCS交互",
       min: false,
       //获取主面板列表信息
       init: {
         url: '/im/init', //接口地址（返回的数据格式见下文）
         type: 'get', //默认get，一般可不填
-        data: {loginAccount:loginAccount} //额外参数
+        data: {loginAccount: loginAccount} //额外参数
       },
       members: {
         url: '/im/members',
@@ -77,7 +78,7 @@
     var stompClient = Stomp.over(socket);
     stompClient.connect('guest', 'guest', function (frame) {
       console.log('Connected: ' + frame);
-      stompClient.subscribe("/exchange/greetings/" + loginAccount,
+      stompClient.subscribe("/exchange/friend/" + loginAccount,
           function (greeting) {
             var data = JSON.parse(greeting.body)
             console.log(data);
@@ -89,6 +90,7 @@
     layim.on('sendMessage', function (res) {
       var mine = res.mine;
       var to = res.to;
+      var type = to.type;
 
       var message = {
         id: mine.id,
@@ -99,7 +101,7 @@
         fromId: 1
       };
 
-      stompClient.send("/app/chat", {'user': to.id},
+      stompClient.send("/app/"+type, {'user': to.id},
           JSON.stringify(message));
     });
 

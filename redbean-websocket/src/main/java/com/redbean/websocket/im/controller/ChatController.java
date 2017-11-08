@@ -15,10 +15,17 @@ public class ChatController {
   @Autowired
   private SimpMessagingTemplate messagingTemplate;
 
-  @MessageMapping("/chat")
-  public void say(@Header String user, UserMessage message) {
+  @MessageMapping("/friend")
+  public void friendChat(@Header String user, UserMessage message) {
 
-    messagingTemplate.convertAndSend("/exchange/greetings/" + user, message);
+    messagingTemplate.convertAndSend("/exchange/friend/" + user, message);
+
+  }
+
+  @MessageMapping("/group")
+  public void groupChat(@Header String group, UserMessage message) {
+
+    messagingTemplate.convertAndSend("/exchange/group/" + group, message);
 
   }
 
