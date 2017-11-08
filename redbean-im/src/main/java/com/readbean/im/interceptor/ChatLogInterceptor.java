@@ -1,6 +1,7 @@
 package com.readbean.im.interceptor;
 
 import com.alibaba.fastjson.JSON;
+import com.readbean.im.config.shiro.ShiroUtils;
 import com.readbean.im.service.LogService;
 import com.readbean.im.vo.ImMessage;
 import javax.annotation.Resource;

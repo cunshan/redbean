@@ -9,4 +9,5 @@ public class RedbeanImApplication {
   public static void main(String[] args) {
     SpringApplication.run(RedbeanImApplication.class, args);
   }
+
 }

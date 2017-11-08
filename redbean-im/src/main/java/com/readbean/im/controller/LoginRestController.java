@@ -31,8 +31,7 @@ public class LoginRestController {
   private LogService logService;
 
   @PostMapping("/login")
-  public ImResponse login(String loginAccount, String password, HttpServletRequest request,
-      HttpServletResponse response) {
+  public ImResponse login(String loginAccount, String password, HttpServletRequest request) {
     UsernamePasswordToken token = new UsernamePasswordToken(loginAccount, password);
     SecurityUtils.getSubject().login(token);
     ImResponse<UserVo> imResponse = new ImResponse<>();

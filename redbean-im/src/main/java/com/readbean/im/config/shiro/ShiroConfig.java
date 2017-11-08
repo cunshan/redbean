@@ -2,16 +2,22 @@ package com.readbean.im.config.shiro;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import javax.servlet.DispatcherType;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 /**
  * . shiro配置初始化类
@@ -30,38 +36,18 @@ public class ShiroConfig {
 
 
   /**
-   * HashedCredentialsMatcher，这个类是为了对密码进行编码的， 防止密码在数据库里明码保存，当然在登陆认证的时候， 这个类也负责对form里输入的密码进行编码。
+   * shiroFilter注册.
    */
-//  @Bean(name = "hashedCredentialsMatcher")
-//  public HashedCredentialsMatcher hashedCredentialsMatcher() {
-//    HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
-//    credentialsMatcher.setHashAlgorithmName("MD5");
-//    credentialsMatcher.setHashIterations(2);
-//    credentialsMatcher.setStoredCredentialsHexEncoded(true);
-//    return credentialsMatcher;
-//  }
-
-  /**
-   * ShiroRealm，这是个自定义的认证类，继承自AuthorizingRealm， 负责用户的认证和权限的处理，可以参考JdbcRealm的实现。
-   */
-  @Bean(name = "shiroRealm")
-  @DependsOn("lifecycleBeanPostProcessor")
-  public ShiroRealm shiroRealm() {
-    ShiroRealm realm = new ShiroRealm();
-//    realm.setCredentialsMatcher(hashedCredentialsMatcher());
-    return realm;
-  }
-
-
-  /**
-   * SecurityManager，权限管理，这个类组合了登陆，登出，权限，session的处理，是个比较重要的类。 //
-   */
-  @Bean(name = "securityManager")
-  public DefaultWebSecurityManager securityManager() {
-    DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-    securityManager.setRealm(shiroRealm());
-//        securityManager.setCacheManager(ehCacheManager());
-    return securityManager;
+  @Bean
+  public FilterRegistrationBean filterRegistrationBean() {
+    FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
+    DelegatingFilterProxy proxy = new DelegatingFilterProxy("shiroFilter");
+    proxy.setTargetFilterLifecycle(true);
+    filterRegistration.setFilter(proxy);
+    filterRegistration.setEnabled(true);
+    filterRegistration.addUrlPatterns("/*");
+    filterRegistration.setDispatcherTypes(DispatcherType.REQUEST,DispatcherType.ASYNC,DispatcherType.FORWARD);
+    return filterRegistration;
   }
 
 
@@ -96,6 +82,44 @@ public class ShiroConfig {
   }
 
   /**
+   * SecurityManager，权限管理，这个类组合了登陆，登出，权限，session的处理，是个比较重要的类。 //
+   */
+  @Bean(name = "securityManager")
+  public DefaultWebSecurityManager securityManager() {
+    DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+    securityManager.setRealm(shiroRealm());
+//        securityManager.setCacheManager(ehCacheManager());
+    return securityManager;
+  }
+
+  /**
+   * @see DefaultWebSessionManager
+   */
+  @Bean(name = "sessionManager")
+  public DefaultWebSessionManager defaultWebSessionManager() {
+    DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+//    sessionManager.setCacheManager(cacheManager());
+    sessionManager.setGlobalSessionTimeout(1800000);
+    sessionManager.setDeleteInvalidSessions(true);
+    sessionManager.setSessionValidationSchedulerEnabled(true);
+    sessionManager.setDeleteInvalidSessions(true);
+    return sessionManager;
+  }
+
+
+  /**
+   * ShiroRealm，这是个自定义的认证类，继承自AuthorizingRealm， 负责用户的认证和权限的处理，可以参考JdbcRealm的实现。
+   */
+  @Bean(name = "shiroRealm")
+  @DependsOn("lifecycleBeanPostProcessor")
+  public ShiroRealm shiroRealm() {
+    ShiroRealm realm = new ShiroRealm();
+//    realm.setCredentialsMatcher(hashedCredentialsMatcher());
+    return realm;
+  }
+
+
+  /**
    * DefaultAdvisorAutoProxyCreator，Spring的一个bean，由Advisor决定对哪些类的方法进行AOP代理。
    */
   @Bean
@@ -115,5 +139,18 @@ public class ShiroConfig {
     aASA.setSecurityManager(securityManager());
     return aASA;
   }
+
+/**.
+ * HashedCredentialsMatcher，这个类是为了对密码进行编码的， 防止密码在数据库里明码保存，当然在登陆认证的时候， 这个类也负责对form里输入的密码进行编码。
+ */
+//  @Bean(name = "hashedCredentialsMatcher")
+//  public HashedCredentialsMatcher hashedCredentialsMatcher() {
+//    HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+//    credentialsMatcher.setHashAlgorithmName("MD5");
+//    credentialsMatcher.setHashIterations(2);
+//    credentialsMatcher.setStoredCredentialsHexEncoded(true);
+//    return credentialsMatcher;
+//  }
+
 
 }
