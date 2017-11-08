@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ChatServiceImpl implements ChatService {
 
-  private static final String DESTINATION = "/queue/user-";
+  private static final String DESTINATION = "/topic/friend.user.";
 
   @Autowired
   private SimpMessagingTemplate simpMessagingTemplate;

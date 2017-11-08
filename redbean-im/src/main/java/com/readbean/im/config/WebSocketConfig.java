@@ -20,7 +20,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
   @Override
   public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
-    stompEndpointRegistry.addEndpoint("/gs-guide-websocket").withSockJS();
+    stompEndpointRegistry.addEndpoint("/redbean-im").withSockJS();
   }
 
   @Override
