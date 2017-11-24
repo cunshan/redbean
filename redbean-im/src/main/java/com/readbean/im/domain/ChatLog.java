@@ -1,8 +1,10 @@
 package com.readbean.im.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+
 import lombok.Data;
 
 @Data
@@ -20,5 +22,13 @@ public class ChatLog extends BaseDomain implements Serializable {
   private String userName;//消息发送人用户名
   @Transient
   private String avatar;//消息发送人用户头像
+
+  private String businessId;
+  private String businessType;
+
+  @Transient
+  private String fromUserName;
+  @Transient
+  private String toUserName;
 
 }

@@ -12,5 +12,9 @@ public class IndexController {
     return "index";
   }
 
+  @GetMapping("chat-record")
+  public String chatRecord(){
+    return "chat-record";
+  }
 
 }
