@@ -1,8 +1,8 @@
 package com.readbean.im.service.impl;
 
+import com.readbean.im.common.Constants;
 import com.readbean.im.domain.ChatLog;
 import com.readbean.im.mapper.ChatLogMapper;
-import com.readbean.im.repository.ChatLogRepository;
 import com.readbean.im.service.ChatService;
 import com.readbean.im.vo.ChatLogVo;
 import com.readbean.im.vo.ImMessage;
@@ -18,8 +18,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ChatServiceImpl implements ChatService {
 
-  private static final String DESTINATION = "/exchange/friend.user/";
-
   @Autowired
   private SimpMessagingTemplate simpMessagingTemplate;
 
@@ -28,8 +26,9 @@ public class ChatServiceImpl implements ChatService {
 
   @Override
   public void sendToFriend(ImMessage message) {
-    log.info(DESTINATION + message.getToUserId());
-    simpMessagingTemplate.convertAndSend(DESTINATION + message.getToUserId(), message);
+    log.info(Constants.FRIEND_DESTINATION + message.getToUserId());
+    simpMessagingTemplate
+        .convertAndSend(Constants.FRIEND_DESTINATION + message.getToUserId(), message);
   }
 
   @Override
