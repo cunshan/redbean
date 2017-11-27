@@ -8,10 +8,8 @@ import com.readbean.im.vo.ChatLogVo;
 import com.readbean.im.vo.ImMessage;
 import com.readbean.im.vo.ImResponse;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -20,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ChatServiceImpl implements ChatService {
 
-  private static final String DESTINATION = "/topic/friend.user.";
+  private static final String DESTINATION = "/exchange/friend.user/";
 
   @Autowired
   private SimpMessagingTemplate simpMessagingTemplate;
