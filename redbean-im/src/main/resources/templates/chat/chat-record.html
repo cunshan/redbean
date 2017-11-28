@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/third/layim/css/layui.css"/>
+  <script type="text/javascript" src="/third/layim/layui.js"></script>
+  <script type="text/html" id="titleTpl">
+    {{new Date(d.createdDate).Format("yyyy-MM-dd hh:mm:ss")}}
+  </script>
+  <script type="text/javascript" src="/js/chat/chat-record.js"></script>
+</head>
+<body>
+
+<section layout:fragment="content">
+  <form class="layui-form" action="">
+    <div class="layui-form-item">
+      <div class="layui-inline">
+        <label class="layui-form-label">发送人</label>
+        <div class="layui-input-inline">
+          <select name="fromUserId">
+            <option value="">请选择发送人</option>
+            <option value="1">张三</option>
+            <option value="2">李四</option>
+          </select>
+        </div>
+      </div>
+      <div class="layui-inline">
+        <label class="layui-form-label">接收人</label>
+        <div class="layui-input-inline">
+          <select name="toUserId" autocomplete="true">
+            <option value="">请选择接收人</option>
+            <option value="1">张三</option>
+            <option value="2">李四</option>
+          </select>
+        </div>
+      </div>
+      <div class="layui-inline">
+        <label class="layui-form-label">业务编码</label>
+        <div class="layui-input-inline">
+          <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-inline">
+        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="search()">小型按钮</button>
+      </div>
+    </div>
+  </form>
+  <table id="demo" lay-filter="test"></table>
+</section>
+</body>
+</html>

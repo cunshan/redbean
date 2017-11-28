@@ -10,16 +10,16 @@ public class ChatController {
 
   @GetMapping("/chat-log")
   public String chatLog(){
-   return "chatLog";
+   return "chat/chatLog";
   }
 
   @GetMapping("/find")
   public String find(){
-    return "find";
+    return "chat/find";
   }
 
   @GetMapping("/msg-box")
   public String msgBox(){
-    return "msgBox";
+    return "chat/msgBox";
   }
 }

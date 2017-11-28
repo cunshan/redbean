@@ -1,16 +1,16 @@
 package com.readbean.im.config;
 
+import nz.net.ultraq.thymeleaf.LayoutDialect;
+import nz.net.ultraq.thymeleaf.decorators.strategies.GroupingStrategy;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-public class ApplicationConfig extends WebMvcConfigurerAdapter {
+public class ApplicationConfig {
 
-
-  public void addInterceptors(InterceptorRegistry registry) {
-    //TODO 一些拦截器定义
+  @Bean
+  public LayoutDialect layoutDialect() {
+    return new LayoutDialect(new GroupingStrategy());
   }
-
 
 }
