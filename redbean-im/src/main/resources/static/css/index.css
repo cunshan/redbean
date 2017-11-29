@@ -1,0 +1,13 @@
+.mgp_win {
+  width: 200px;
+  border: 1px #f8f8f8 solid;
+  position: absolute;
+  top: 0px;
+  right: -200px;
+  background-color: #fff;
+  bottom: 0;
+}
+
+.layim-chat-box {
+  padding-right: 200px;
+}
