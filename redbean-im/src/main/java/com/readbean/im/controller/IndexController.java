@@ -8,8 +8,8 @@ public class IndexController {
 
 
   @GetMapping("/")
-  public String index(){
-    return "index";
+  public String portal(){
+    return "login";
   }
 
   @GetMapping("/chat-record")
@@ -20,6 +20,17 @@ public class IndexController {
   @GetMapping("/manage")
   public String manage(){
     return "chat/chat-record";
+  }
+
+  @GetMapping("/login")
+  public String login(){
+    return "login";
+  }
+
+
+  @GetMapping("/index")
+  public String index(){
+    return "index";
   }
 
 }

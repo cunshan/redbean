@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,6 +57,15 @@ public class LoginRestController {
     log.setLoginIp(WebUtils.getRemoteHost(request));
     log.setLoginAccount(user.getLoginAccount());
     logService.addLoginLog(log);
+  }
+
+  /**
+   * 获取当前登录用户信息
+   * .
+   */
+  @GetMapping("get-login-user")
+  public User getLoginUser(){
+    return ShiroUtils.getLoginUser();
   }
 
 

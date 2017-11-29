@@ -1,10 +1,95 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+  <meta charset="UTF-8"/>
+  <title>IM</title>
+  <link rel="stylesheet" href="/third/layim/css/layui.css"/>
+  <style>
+    .mgp_win {
+      width: 200px;
+      border: 1px #f8f8f8 solid;
+      position: absolute;
+      top: 0px;
+      right: -200px;
+      background-color: #fff;
+      bottom: 0;
+    }
+
+    .layim-chat-box {
+      padding-right: 200px;
+    }
+  </style>
 </head>
 <body>
-
 </body>
+<form id="loginForm" class="layui-form" action="" style="display: none;">
+  <div class="layui-form-item">
+    <label class="layui-form-label">用户名</label>
+    <div class="layui-input-inline">
+      <input type="text" name="title" id="userName" lay-verify="required" placeholder="用户名"
+             autocomplete="off" class="layui-input"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">密码</label>
+    <div class="layui-input-inline">
+      <input type="password" name="password" id="password" lay-verify="required" placeholder="密码"
+             autocomplete="off" class="layui-input"/>
+    </div>
+    <!--<div class="layui-form-mid layui-word-aux">辅助文字</div>-->
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn layui-btn-radius" id="loginBtn" type="button">登录</button>
+    </div>
+  </div>
+</form>
+<script type="text/javascript" src="/third/layim/layui.js"></script>
+<script type="text/javascript" src="/js/sockjs.js"></script>
+<script type="text/javascript" src="/js/stomp.js"></script>
+<script type="text/javascript">
+  var $;
+  layui.use(['jquery','layer'], function (layim) {
+
+    $ = layui.$; //重点处
+
+    var logIndex = layer.open({
+      type: 1,
+      content: $("#loginForm"), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+      closeBtn: 0,
+      resize: false,
+      title: '登录'
+    });
+
+    $("#loginBtn").click(function () {
+      var loginAccount = $("#userName").val();
+      var password = $("#password").val();
+      //登录
+      $.ajax({
+        method: "POST",
+        url: "/rest/login",
+        dataType: "json",
+        data: {loginAccount: loginAccount, password: password},
+        success: function (data) {
+          console.log(data);
+          if (data.code === '0') {
+            //打开后台管理页面
+            window.location.href="chat-record";
+            //关闭登陆框
+            layer.close(logIndex);
+          } else {
+            layer.msg(data.msg);
+          }
+        },
+        error: function () {
+          layer.msg("登录失败，请稍后再试！");
+        }
+      });
+
+    });
+
+  });
+
+</script>
+
 </html>

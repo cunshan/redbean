@@ -68,7 +68,8 @@ public class ShiroConfig {
     //filterManager
     Map<String, String> filterChainDefinitionManager = new LinkedHashMap<>();
     filterChainDefinitionManager.put("/logout", "logout");
-//    filterChainDefinitionManager.put("/chat/chat-log", "authc,perms[aa]");
+    filterChainDefinitionManager.put("/chat-record", "authc");
+    filterChainDefinitionManager.put("/rest/get-login-user", "authc");
     filterChainDefinitionManager.put("/**", "anon");
     shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionManager);
 
@@ -77,7 +78,7 @@ public class ShiroConfig {
     //无权限地址
     shiroFilterFactoryBean.setUnauthorizedUrl("/403");
     //登录地址
-    shiroFilterFactoryBean.setLoginUrl("/");
+    shiroFilterFactoryBean.setLoginUrl("/login");
     return shiroFilterFactoryBean;
   }
 
