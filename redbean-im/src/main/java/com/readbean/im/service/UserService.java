@@ -11,4 +11,9 @@ public interface UserService {
    * . 获取所有用户
    */
   List<User> getAllUserList();
+
+  /**.
+   * 根据ID 获取用户信息
+   */
+  User getUserById(Long userId);
 }

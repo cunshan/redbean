@@ -31,6 +31,8 @@ public class LogServiceImpl implements LogService {
     log.setUpdatedBy(message.getId());
     log.setCreatedDate(new Date());
     log.setUpdatedDate(new Date());
+    log.setBusinessId(message.getBizId());
+    log.setBusinessType("1");
     chatLogRepository.save(log);
   }
 

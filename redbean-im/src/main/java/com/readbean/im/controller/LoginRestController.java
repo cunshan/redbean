@@ -60,13 +60,36 @@ public class LoginRestController {
   }
 
   /**
-   * 获取当前登录用户信息
-   * .
+   * 获取当前登录用户信息 .
    */
   @GetMapping("get-login-user")
-  public User getLoginUser(){
-    return ShiroUtils.getLoginUser();
+  public ImResponse<UserVo> getLoginUser() {
+    User user = ShiroUtils.getLoginUser();
+    UserVo userVo = new UserVo();
+    userVo.setLoginAccount(user.getLoginAccount());
+    userVo.setAvatar(user.getAvatar());
+    userVo.setUsername(user.getName());
+    userVo.setId(user.getId().toString());
+    ImResponse<UserVo> response = new ImResponse<>();
+    response.setData(userVo);
+    return response;
   }
 
+
+  /**
+   * . 根据ID获取用户信息
+   */
+  @GetMapping("/get-user-by-id")
+  public ImResponse<UserVo> getUserById(Long userId) {
+    User user = userService.getUserById(userId);
+    UserVo userVo = new UserVo();
+    userVo.setUsername(user.getName());
+    userVo.setId(user.getId().toString());
+    userVo.setAvatar(user.getAvatar());
+    userVo.setLoginAccount(user.getLoginAccount());
+    ImResponse<UserVo> response = new ImResponse<>();
+    response.setData(userVo);
+    return response;
+  }
 
 }

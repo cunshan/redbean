@@ -22,6 +22,7 @@ public class ImMessage implements Serializable {
   private String fromId;//消息的发送者id（比如群组中的某个消息发送者），可用于自动解决浏览器多窗口时的一些问题
   private Long timestamp = new Date().getTime();
   private String toUserId;//发送给的USER的ID
+  private String bizId;//消息相关联的业务ID
   //---用户消息结束---
 
 

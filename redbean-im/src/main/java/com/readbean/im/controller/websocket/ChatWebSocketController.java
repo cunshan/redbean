@@ -1,5 +1,6 @@
 package com.readbean.im.controller.websocket;
 
+import com.alibaba.fastjson.JSON;
 import com.readbean.im.service.ChatService;
 import com.readbean.im.vo.ImMessage;
 import javax.annotation.Resource;
@@ -25,7 +26,6 @@ public class ChatWebSocketController {
   public void group() {
 
   }
-
 
 
 }

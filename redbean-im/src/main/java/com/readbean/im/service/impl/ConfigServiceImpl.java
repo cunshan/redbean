@@ -41,6 +41,15 @@ public class ConfigServiceImpl implements ConfigService {
     return response;
   }
 
+  @Override
+  public ImResponse<List<UserVo>> getAllFriends(String loginAccount) {
+    List<UserVo> userList = new ArrayList<>();
+    userRepository.findAll().forEach(user -> userList.add(buildUserVoFromUser(user)));
+    ImResponse<List<UserVo>> response = new ImResponse<>();
+    response.setData(userList);
+    return response;
+  }
+
   private List<ChatGroupVo> buildChatGroups() {
     List<ChatGroupVo> list = new ArrayList<>();
     ChatGroupVo chatGroup1 = new ChatGroupVo();

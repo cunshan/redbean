@@ -15,9 +15,9 @@ layui.use(['jquery', 'layer', 'im'], function () {
     data: {},
     success: function (data) {
       console.log(data);
-      if(data){
+      if('0' == data.code){
         //登录成功后初始化IM
-        im.init(data);
+        im.init(data.data);
       }else {
         layer.msg("登录失败，请重试！");
       }

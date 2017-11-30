@@ -1,9 +1,10 @@
 var $;
 
-layui.define(['jquery', 'layim', 'layer'], function(exports){
+layui.define(['jquery', 'layim', 'layer'], function (exports) {
   $ = layui.$; //重点处
   var layim = layui.layim;
   var im = {};
+  var layerIndex;//选人弹出层index
 
   /**.
    * 初始化IM
@@ -65,7 +66,6 @@ layui.define(['jquery', 'layim', 'layer'], function(exports){
             layim.getMessage(data);
           }, {id: user.id});
     }, function (frame) {
-      console.log(frame.headers);
       var headers = frame.headers;
       if (headers) {
         layer.msg(headers.message);
@@ -78,7 +78,7 @@ layui.define(['jquery', 'layim', 'layer'], function(exports){
     layim.on('sendMessage', function (res) {
       var mine = res.mine;
       var to = res.to;
-
+      var bizId = getBizDiv(to.id).find("input[name='bizId']").val();
       var message = {
         id: mine.id,
         type: to.type,
@@ -86,11 +86,79 @@ layui.define(['jquery', 'layim', 'layer'], function(exports){
         username: mine.username,
         avatar: mine.avatar,
         fromId: 1,
-        toUserId: to.id
+        toUserId: to.id,
+        bizId: bizId
       };
 
       stompClient.send("/im-ws/talk-to-friend", {},
           JSON.stringify(message));
+    });
+  };
+
+  /**
+   * 弹出选人的弹出层
+   * @param bizId
+   */
+  im.openChooseUser = function (bizId) {
+    console.log(bizId);
+
+    $.post('/config/get-all-friends', {}, function (res) {
+      var str = "";
+      var users = res.data;
+      $(users).each(function (index, user) {
+        str += "<a href='javascript:layui.im.openChat(\"" + user.id + "\",\""
+            + bizId + "\");' >" + user.username + "</a></br>"
+      });
+      layerIndex = layer.open({
+        type: 1,
+        content: str //注意，如果str是object，那么需要字符拼接。
+      });
+    });
+  };
+
+  /**.
+   * 获取业务框DIV
+   */
+  function getBizDiv(userId) {
+    var resDiv;
+    $(".mgp_win").each(function (index, div) {
+      var _div = $(div);
+      var cltid = _div.attr("cltid");
+      if (cltid === userId) {
+        resDiv = _div;
+      }
+    });
+    return resDiv;
+  }
+
+  /**
+   * 打开对话框
+   */
+  im.openChat = function (userId, bizId) {
+    $.ajax({
+      url: "/rest/get-user-by-id",
+      dataType: "JSON",
+      method: "get",
+      data: "userId=" + userId,
+      success: function (data) {
+
+        if ("0" == data.code) {
+          var user = data.data;
+          //打开对话框
+          layim.chat({
+            name: user.username
+            , type: 'friend'
+            , avatar: user.avatar
+            , id: userId
+          });
+          //添加业务页面
+          var _div = getBizDiv(userId);
+          var html = "<label>业务ID：</label><input readonly='true' name='bizId' value='"
+              + bizId + "'/>";
+          _div.html(html);
+        }
+        layer.close(layerIndex);
+      }
     });
   };
 

@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-  <link rel="stylesheet" href="/third/layim/css/layui.css"/>
-  <script type="text/javascript" src="/third/layim/layui.js"></script>
   <script type="text/html" id="titleTpl">
     {{new Date(d.createdDate).Format("yyyy-MM-dd hh:mm:ss")}}
+  </script>
+  <script type="text/html" id="barDemo">
+    <a href="javascript:openChat({{d.id}});" class="layui-table-link">发起对话</a>
   </script>
   <script type="text/javascript" src="/js/chat/chat-record.js"></script>
 </head>
