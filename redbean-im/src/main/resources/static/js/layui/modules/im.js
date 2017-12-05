@@ -15,7 +15,7 @@ layui.define(['jquery', 'layim', 'layer'], function (exports) {
 //        isAudio: true,
 //        isVideo: true,
       voice: false,
-      title: "PBCS交互",
+      title: "即时通信",
       min: false,
       //获取主面板列表信息
       init: {
